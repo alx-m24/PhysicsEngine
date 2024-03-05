@@ -2,6 +2,7 @@
 // SFML
 #include <SFML/Graphics.hpp>
 // Other
+#include <vector>
 #include <iostream>
 // My headers
 #include "Headers/Common.hpp"
@@ -10,6 +11,7 @@
 
 sf::RenderWindow* window;
 sf::Font arial;
+unsigned int substeps = 4;
 
 int main() {
 	setupWindow();

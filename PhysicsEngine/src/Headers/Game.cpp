@@ -1,8 +1,23 @@
 #include "Game.hpp"
 
+void Game::updateFps()
+{
+	if (fpsClock.getElapsedTime().asSeconds() >= 1.0f) {
+		fpsText.setString("FPS: " + std::to_string(frame));
+		frame = 0;
+		fpsClock.restart();
+	}
+	++frame;
+}
+
 Game::Game()
 {
+	particleSystem = new ParticleSystem(1);
 	clock.restart();
+
+	fpsText.setFont(arial);
+	fpsText.setFillColor(sf::Color::Red);
+	fpsText.setCharacterSize(32);
 }
 
 void Game::Input()
@@ -23,11 +38,17 @@ void Game::Input()
 void Game::Update()
 {
 	window->clear();
-	spider->update(clock.restart().asSeconds());
+
+	particleSystem->update(clock.restart().asSeconds());
+
+	updateFps();
 }
 
 void Game::Render()
 {
-	spider->show();
+	for (Constriant* constraint : particleSystem->constriants) window->draw(*constraint);
+	window->draw(*particleSystem, &particleSystem->text);
+	window->draw(fpsText);
+
 	window->display();
 }
