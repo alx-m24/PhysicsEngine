@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include <iostream>
 #include "Common.hpp"
 #include "Particle.hpp"
 #include "Constraint.hpp"

@@ -1,6 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+/*Just a note: 
+* This is my OWN vector class/file.
+* Everything was done by me and nothing has been copy/pasted.
+* I use it in nearly all of my graphical projects.
+--*/
+
 namespace Vec {
 	template <typename T>
 	inline float getMagnitude(sf::Vector2<T> v) {
