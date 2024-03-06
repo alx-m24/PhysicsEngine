@@ -1,4 +1,5 @@
-#pragma once
+/* --The best setting for this simulation is 4Hz (substeps = 4)-- */
+
 // SFML
 #include <SFML/Graphics.hpp>
 // Other
@@ -9,15 +10,18 @@
 #include "Headers/Useful.hpp"
 #include "Headers/Game.hpp"
 
+// Global Variables
 sf::RenderWindow* window;
 sf::Font arial;
+// Number of substeps
 unsigned int substeps = 4;
 
 int main() {
 	setupWindow();
 
 	srand(time(0));
-
+	
+	// Class containing nearly everythin
 	Game game;
 
 	while (window->isOpen()) {

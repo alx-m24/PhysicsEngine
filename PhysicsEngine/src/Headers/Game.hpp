@@ -7,7 +7,11 @@
 class Game {
 private:
 	ParticleSystem* particleSystem;
+
+private:
 	sf::Clock clock;
+
+private:
 	sf::Text fpsText;
 	sf::Clock fpsClock;
 	unsigned int frame = 0;

@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Headers\Cloth.hpp" />
     <ClInclude Include="src\Headers\Common.hpp" />
     <ClInclude Include="src\Headers\Constraint.hpp" />
     <ClInclude Include="src\Headers\ParticleSystem.hpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="src\Headers\Vec.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Headers\Cloth.cpp" />
     <ClCompile Include="src\Headers\Constraint.cpp" />
     <ClCompile Include="src\Headers\ParticleSystem.cpp" />
     <ClCompile Include="src\Headers\Game.cpp" />

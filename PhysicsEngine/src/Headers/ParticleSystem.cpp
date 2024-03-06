@@ -2,7 +2,7 @@
 
 void ParticleSystem::loadTexture()
 {
-	this->text.loadFromFile("C:\\Users\\alexa\\OneDrive\\Coding\\C++\\PhysicsEngine\\PhysicsEngine\\res\\circle.png");
+	this->text.loadFromFile(".\\res\\circle.png");
 	this->text.setSmooth(true);
 	this->text.generateMipmap();
 	this->TexSize = sf::Vector2f(text.getSize());
@@ -41,15 +41,30 @@ void ParticleSystem::displayUpdate()
 
 void ParticleSystem::setupConstraints()
 {
-	particles.push_back(new Particle(sf::Vector2f(rand() % window->getSize().x, rand() % window->getSize().y), sf::Color::Magenta, 10.0f, 10.0f, sf::Vector2f(window->getSize().x / 2.0f, 100)));
-	particles.push_back(new Particle(sf::Vector2f(rand() % window->getSize().x, rand() % window->getSize().y), sf::Color::Yellow, 10.0f, 10.0f));
-	particles.push_back(new Particle(sf::Vector2f(rand() % window->getSize().x, rand() % window->getSize().y), sf::Color::Red, 10.0f, 10.0f));
-	particles.push_back(new Particle(sf::Vector2f(rand() % window->getSize().x, rand() % window->getSize().y), sf::Color::Blue, 10.0f, 10.0f));
-	
-	constriants.push_back(new Constriant(particles[0], particles[1], 75.0f));
-	constriants.push_back(new Constriant(particles[0], particles[2], 75.0f));
-	constriants.push_back(new Constriant(particles[2], particles[3], 75.0f));
-	constriants.push_back(new Constriant(particles[3], particles[4], 75.0f));
+	// I know it is horrible to repeat myself (in code), but it was just for the demonstration
+
+	particles.push_back(new Particle({ 500, 100 }, sf::Color::White, 10, 10, {500, 100})); // Locked particle
+	//particles.push_back(new Particle({ 500, 100 }, sf::Color::White, 10, 10)); // Same as above but unlocked
+	particles.push_back(new Particle({ 600, 150 }, sf::Color::White, 10, 10));
+	particles.push_back(new Particle({ 700, 150 }, sf::Color::White, 10, 10));
+	particles.push_back(new Particle({ 800, 150 }, sf::Color::White, 10, 10));
+
+	constriants.push_back(new Constriant(particles[particles.size() - 1], particles[particles.size() - 2], 150));
+	constriants.push_back(new Constriant(particles[particles.size() - 2], particles[particles.size() - 3], 150));
+	constriants.push_back(new Constriant(particles[particles.size() - 3], particles[particles.size() - 4], 150));
+}
+
+void ParticleSystem::force()
+{
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+		sf::Vector2f diff = mousePos - lastMousePos;
+
+		for (Particle* particle : particles) {
+			if (Vec::getDist(particle->pos, mousePos) > forceRange) continue;
+
+			particle->force += (diff * 6000.0f);
+		}
+	}
 }
 
 ParticleSystem::ParticleSystem()
@@ -72,6 +87,8 @@ ParticleSystem::ParticleSystem(int particleCount)
 
 	this->populate(particleCount);
 	setupConstraints();
+
+	//string = new String(&particles, &constriants, 1000, 10.0f);
 }
 
 void ParticleSystem::populate(int count)
@@ -119,12 +136,23 @@ void ParticleSystem::update(float dt)
 {
 	float sub_dt = dt / substeps;
 
+	sf::Vector2u winSize = window->getSize();
+	mousePos = sf::Vector2f(sf::Mouse::getPosition(*window));
+
 	for (int i = 0; i < substeps; ++i) {
+		force();
 		for (Particle* particle : particles) {
-			particle->update(sub_dt);
+			particle->update(sub_dt, winSize);
+
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				if (particle->contains(mousePos)) {
+					particle->pos = mousePos;
+				}
+			}
 		}
 		for (Constriant* constraint : constriants) constraint->update();
 	}
+	lastMousePos = mousePos;
 
 	displayUpdate();
 }

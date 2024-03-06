@@ -12,7 +12,7 @@ void Game::updateFps()
 
 Game::Game()
 {
-	particleSystem = new ParticleSystem(1);
+	particleSystem = new ParticleSystem(0);
 	clock.restart();
 
 	fpsText.setFont(arial);
