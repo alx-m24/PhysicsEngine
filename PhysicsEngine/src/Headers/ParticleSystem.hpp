@@ -4,13 +4,17 @@
 #include "Common.hpp"
 #include "Particle.hpp"
 #include "Constraint.hpp"
+#include "Spring.hpp"
 #include "Cloth.hpp"
+#include "Collision.hpp"
 
 class ParticleSystem : public sf::VertexArray {
 private:
 	// Radius of which the force will affect the particles
 	unsigned int forceRange = 75;
+	bool lastleft = false;
 	String* string;
+	Collision* collision;
 
 private:
 	sf::Vector2f TexSize;
@@ -23,6 +27,7 @@ public:
 public:
 	std::vector<Particle*> particles;
 	std::vector<Constriant*> constriants;
+	std::vector<Spring*> springs;
 
 private:
 	void loadTexture();

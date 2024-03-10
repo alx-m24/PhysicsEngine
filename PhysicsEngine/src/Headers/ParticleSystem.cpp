@@ -41,17 +41,35 @@ void ParticleSystem::displayUpdate()
 
 void ParticleSystem::setupConstraints()
 {
+	/*
 	// I know it is horrible to repeat myself (in code), but it was just for the demonstration
 
-	particles.push_back(new Particle({ 500, 100 }, sf::Color::White, 10, 10, {500, 100})); // Locked particle
-	//particles.push_back(new Particle({ 500, 100 }, sf::Color::White, 10, 10)); // Same as above but unlocked
+	//particles.push_back(new Particle({ 500, 100 }, sf::Color::White, 10, 10, {500, 100})); // Locked particle
+	particles.push_back(new Particle({ 500, 100 }, sf::Color::White, 10, 10)); // Same as above but unlocked
 	particles.push_back(new Particle({ 600, 150 }, sf::Color::White, 10, 10));
 	particles.push_back(new Particle({ 700, 150 }, sf::Color::White, 10, 10));
 	particles.push_back(new Particle({ 800, 150 }, sf::Color::White, 10, 10));
 
-	constriants.push_back(new Constriant(particles[particles.size() - 1], particles[particles.size() - 2], 150));
-	constriants.push_back(new Constriant(particles[particles.size() - 2], particles[particles.size() - 3], 150));
-	constriants.push_back(new Constriant(particles[particles.size() - 3], particles[particles.size() - 4], 150));
+	springs.push_back(new Spring(particles[particles.size() - 1], particles[particles.size() - 2], 150));
+	//constriants.push_back(new Constriant(particles[particles.size() - 2], particles[particles.size() - 3], 150));
+	springs.push_back(new Spring(particles[particles.size() - 3], particles[particles.size() - 4], 50));*/
+	/*
+	particles.push_back(new Particle({ 470, 150 }, sf::Color::White, 10, 10, { 470, 150 }));
+	particles.push_back(new Particle({ 490, 150 }, sf::Color::White, 10, 10, { 490, 150 }));
+	particles.push_back(new Particle({ 510, 150 }, sf::Color::White, 10, 10, { 510, 150 }));
+	particles.push_back(new Particle({ 530, 150 }, sf::Color::White, 10, 10, { 530, 150 }));
+
+	particles.push_back(new Particle({ 470, 300 }, sf::Color::White, 10, 10));
+	particles.push_back(new Particle({ 490, 300 }, sf::Color::White, 10, 10));
+	particles.push_back(new Particle({ 510, 300 }, sf::Color::White, 10, 10));
+	particles.push_back(new Particle({ 530, 300 }, sf::Color::White, 10, 10));
+
+	constriants.push_back(new Constriant(particles[0], particles[4], 300));
+	constriants.push_back(new Constriant(particles[1], particles[5], 300));
+	constriants.push_back(new Constriant(particles[2], particles[6], 300));
+	constriants.push_back(new Constriant(particles[3], particles[7], 300));
+	constriants.push_back(new Constriant(particles[6], particles[5], 50));*/
+	particles.push_back(new Particle({ 470, 300 }, sf::Color::Magenta, 100, 30));
 }
 
 void ParticleSystem::force()
@@ -76,6 +94,8 @@ ParticleSystem::ParticleSystem()
 	int count = particles.size();
 	this->resize(count * 4);
 
+	collision = new Collision(&particles);
+
 	setupConstraints();
 }
 
@@ -88,7 +108,10 @@ ParticleSystem::ParticleSystem(int particleCount)
 	this->populate(particleCount);
 	setupConstraints();
 
-	//string = new String(&particles, &constriants, 1000, 10.0f);
+	collision = new Collision(&particles);
+
+	string = new String(&particles, &constriants, 50, 10.0f);
+	//string = new String(&particles, &springs, 2, 10.0f, 150.0f);
 }
 
 void ParticleSystem::populate(int count)
@@ -138,21 +161,28 @@ void ParticleSystem::update(float dt)
 
 	sf::Vector2u winSize = window->getSize();
 	mousePos = sf::Vector2f(sf::Mouse::getPosition(*window));
+	bool left = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 
 	for (int i = 0; i < substeps; ++i) {
 		force();
 		for (Particle* particle : particles) {
 			particle->update(sub_dt, winSize);
 
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			if (left && !lastleft) {
 				if (particle->contains(mousePos)) {
-					particle->pos = mousePos;
+					particle->isMoving = true;
 				}
 			}
+			else if (!left && lastleft) particle->isMoving = false;
+
+			if (particle->isMoving) particle->pos = mousePos;
 		}
 		for (Constriant* constraint : constriants) constraint->update();
+		for (Spring* spring : springs) spring->update();
+		collision->checkCollisions();
 	}
 	lastMousePos = mousePos;
+	lastleft = left;
 
 	displayUpdate();
 }

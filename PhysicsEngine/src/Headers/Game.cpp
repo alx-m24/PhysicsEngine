@@ -12,7 +12,7 @@ void Game::updateFps()
 
 Game::Game()
 {
-	particleSystem = new ParticleSystem(0);
+	particleSystem = new ParticleSystem(10);
 	clock.restart();
 
 	fpsText.setFont(arial);
@@ -47,6 +47,7 @@ void Game::Update()
 void Game::Render()
 {
 	for (Constriant* constraint : particleSystem->constriants) window->draw(*constraint);
+	for (Spring* spring : particleSystem->springs) window->draw(*spring);
 	window->draw(*particleSystem, &particleSystem->text);
 	window->draw(fpsText);
 
