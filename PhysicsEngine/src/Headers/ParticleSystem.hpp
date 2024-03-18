@@ -1,20 +1,22 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "Fluid.hpp"
 #include "Common.hpp"
 #include "Particle.hpp"
 #include "Constraint.hpp"
 #include "Spring.hpp"
 #include "Cloth.hpp"
 #include "Collision.hpp"
+#include "InterMolecular.hpp"
 
 class ParticleSystem : public sf::VertexArray {
 private:
 	// Radius of which the force will affect the particles
 	unsigned int forceRange = 75;
 	bool lastleft = false;
-	String* string;
 	Collision* collision;
+	InterMolecularSystem* test;
 
 private:
 	sf::Vector2f TexSize;
@@ -22,12 +24,14 @@ private:
 	sf::Vector2f mousePos;
 
 public:
+	sf::VertexArray fluidDisplay;
 	sf::Texture text;
 
 public:
 	std::vector<Particle*> particles;
 	std::vector<Constriant*> constriants;
 	std::vector<Spring*> springs;
+	std::vector<Fluid*> fluids;
 
 private:
 	void loadTexture();
@@ -36,7 +40,6 @@ private:
 	void force();
 
 public:
-	ParticleSystem();
 	ParticleSystem(int particleCount);
 
 public:

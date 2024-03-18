@@ -1,6 +1,6 @@
 #include "Spring.hpp"
 
-Spring::Spring(Particle* p1, Particle* p2, float strength)
+Spring::Spring(Particle* p1, Particle* p2, float length, float strength)
 {
 	this->setPrimitiveType(sf::Lines);
 	this->resize(2);
@@ -19,12 +19,14 @@ Spring::Spring(Particle* p1, Particle* p2, float strength)
 void Spring::update()
 {
 	// Hooke's law
-	sf::Vector2f force = -this->strength * displacement;
+	sf::Vector2f force = -this->strength * (displacement - (length *Vec::normalize(displacement)));
 
 	p1->force += force;
 	p2->force -= force;
 
 	this->displacement = p1->pos - p2->pos;
+
+	//std::cout << Vec::getMagnitude(displacement) << ", " << length << std::endl;
 
 	(*this)[0].position = p1->pos;
 	(*this)[1].position = p2->pos;

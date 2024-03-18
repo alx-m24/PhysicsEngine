@@ -10,6 +10,7 @@ public:
 	sf::Vector2f vel;
 
 public:
+	bool fromFluid = false;
 	bool isMoving = false;
 	float mass = 10.0f;
 	float radius = 10.0f;

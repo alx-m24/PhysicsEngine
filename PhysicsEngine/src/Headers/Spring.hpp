@@ -15,7 +15,7 @@ private:
 	float strength;
 
 public:
-	Spring(Particle* p1, Particle* p2, float strength);
+	Spring(Particle* p1, Particle* p2, float length, float strength);
 
 public:
 	void update();

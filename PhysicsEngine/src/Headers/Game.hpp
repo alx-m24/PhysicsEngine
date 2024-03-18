@@ -10,6 +10,9 @@ private:
 
 private:
 	sf::Clock clock;
+	sf::Shader blur;
+	sf::RenderTexture displayFluid;
+	float blurStrength = 2.8f;
 
 private:
 	sf::Text fpsText;
@@ -17,6 +20,7 @@ private:
 	unsigned int frame = 0;
 
 private:
+	void applyBlur();
 	void updateFps();
 
 public:

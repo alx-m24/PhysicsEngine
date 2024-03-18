@@ -68,8 +68,11 @@ void Particle::update(float dt, sf::Vector2u winSize)
 	pos = 2.0f * pos - lastPos + acc * dt * dt;
 	lastPos = temp;
 
+	vel = pos - lastPos;
+
 	// Initialising the force to gravity
 	acc = G;
+	//acc = { 0, 0 };
 	force = { 0, 0 };
 }
 
@@ -83,7 +86,6 @@ float Particle::getEnergy(float winSizeY)
 {
 	if (locked) return 0.0f;
 
-	sf::Vector2f vel = pos - lastPos;
 	float speed = Vec::getMagnitude(vel);
 
 	// K.E = (1/2) * mass * speed^2

@@ -8,4 +8,6 @@
 // Pointer to main window
 extern sf::RenderWindow* window;
 extern sf::Font arial;
+extern float largest;
 extern unsigned int substeps;
+extern bool toReset;

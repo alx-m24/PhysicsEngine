@@ -76,6 +76,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -90,6 +93,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -104,6 +109,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,6 +126,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +141,8 @@
     <ClInclude Include="src\Headers\Collision.hpp" />
     <ClInclude Include="src\Headers\Common.hpp" />
     <ClInclude Include="src\Headers\Constraint.hpp" />
+    <ClInclude Include="src\Headers\Fluid.hpp" />
+    <ClInclude Include="src\Headers\InterMolecular.hpp" />
     <ClInclude Include="src\Headers\ParticleSystem.hpp" />
     <ClInclude Include="src\Headers\Game.hpp" />
     <ClInclude Include="src\Headers\Particle.hpp" />
@@ -142,12 +154,17 @@
     <ClCompile Include="src\Headers\Cloth.cpp" />
     <ClCompile Include="src\Headers\Collision.cpp" />
     <ClCompile Include="src\Headers\Constraint.cpp" />
+    <ClCompile Include="src\Headers\Fluid.cpp" />
+    <ClCompile Include="src\Headers\InterMolecular.cpp" />
     <ClCompile Include="src\Headers\ParticleSystem.cpp" />
     <ClCompile Include="src\Headers\Game.cpp" />
     <ClCompile Include="src\Headers\Particle.cpp" />
     <ClCompile Include="src\Headers\Spring.cpp" />
     <ClCompile Include="src\Headers\Useful.cpp" />
     <ClCompile Include="src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Shader\Blur.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

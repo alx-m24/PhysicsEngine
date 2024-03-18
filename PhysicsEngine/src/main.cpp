@@ -15,6 +15,8 @@ sf::RenderWindow* window;
 sf::Font arial;
 // Number of substeps
 unsigned int substeps = 4;
+float largest = -1.0f;
+bool toReset = false;
 
 int main() {
 	setupWindow();
