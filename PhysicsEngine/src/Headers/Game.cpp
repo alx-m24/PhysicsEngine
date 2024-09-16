@@ -38,8 +38,9 @@ void Game::updateFps()
 
 Game::Game()
 {
-	unsigned int num = 0;
-	std::cout << num << std::endl;
+	unsigned int num = 1000;
+	std::cout << "Enter number of particles(can handle more than 1000): ";
+	std::cin >> num;
 
 	particleSystem = new ParticleSystem(num);
 
